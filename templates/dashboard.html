@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Save New Password Section -->
+        <section id="save-password">
+            <h3>Save a New Password:</h3>
+            <form method="POST" action="{{ url_for('save_password') }}">
+                <input type="text" name="website" placeholder="Website" required>
+                <input type="url" name="url" placeholder="URL">
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Save Password</button>
+            </form>
+        </section>
+
+        <!-- View Saved Passwords Section -->
+        <section id="view-passwords">
+            <h1>Welcome, {{ current_user.username }}!</h1>
+            <h2>Your Saved Passwords:</h2>
+            <ul>
+                {% for password in passwords %}
+                <div>
+                    <p>{{ password.website }} - 
+                        <a href="javascript:void(0);" onclick="getPassword('{{ password.website }}')">View</a>
+                    </p>
+                </div>
+                {% endfor %}
+            </ul>
+
+            <div id="password-display" style="display: none;">
+                <h3>Password for: <span id="website-name"></span></h3>
+                <p id="decrypted-password"></p>
+            </div>
+        </section>
+
+        <!-- Logout Section -->
+        <section id="logout">
+            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </section>
+    </div>
+
+    <script>
+        function getPassword(website) {
+            fetch('/get_password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ website_name: website }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById("password-display").style.display = "block";
+                    document.getElementById("website-name").textContent = data.website_name;
+                    document.getElementById("decrypted-password").textContent = data.password;
+                }
+            })
+            .catch(error => console.error('Error fetching password:', error));
+        }
+    </script>
+</body>
+</html>

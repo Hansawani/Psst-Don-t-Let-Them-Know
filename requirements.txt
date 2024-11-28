@@ -1,0 +1,7 @@
+flask-login    
+flask 
+flask-pymongo 
+bcrypt 
+flask-cors 
+cryptography
+psycopg2-binary

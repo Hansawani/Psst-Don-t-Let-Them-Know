@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6ffe6; /* Light green background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-container {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #004d00; /* Dark green */
+}
+
+.register-box {
+    background-color: #f9fff9; /* Very light green */
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 300px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #99cc99; /* Light green border */
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button {
+    width: 90%;
+    padding: 10px;
+    background-color: #33cc33; /* Bright green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #29a329; /* Darker green on hover */
+}
+
+p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333; /* Darker text color */
+}
+
+a {
+    color: #33cc33; /* Bright green link */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
