@@ -26,8 +26,12 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Use environment variable for production
 
 # MongoDB Config
-app.config["MONGO_URI"] = "mongodb://localhost:27017/password_manager"
+app.config["MONGO_URI"] = "mongodb+srv://sushwetabm:3rBSUozWnq6nvNEl@cluster0.2ncb4.mongodb.net/test?retryWrites=true&w=majority"
 mongo = PyMongo(app)
+
+# Debugging: Check MongoDB connection
+if not mongo.cx:
+    raise Exception("MongoDB connection failed. Check your MONGO_URI configuration.")
 
 # Flask-Login Setup
 login_manager = LoginManager()
@@ -45,6 +49,7 @@ class User(UserMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
+
 # User loader function
 @login_manager.user_loader
 def load_user(user_id):
@@ -59,6 +64,7 @@ def load_user(user_id):
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -107,6 +113,7 @@ def dashboard():
     passwords = mongo.db.passwords.find({"username": current_user.username})
     return render_template('dashboard.html', passwords=passwords)
 
+
 @app.route('/save_password', methods=['POST'])
 @login_required
 def save_password():
@@ -118,9 +125,6 @@ def save_password():
     # Encrypt the password before saving
     encrypted_password = cipher_suite.encrypt(password.encode()).decode()
 
-    # Add a log to verify password insertion
-    print(f"Saving password for {website}: {password}")
-    
     # Insert the encrypted password into the database
     passwords.insert_one({
         "username": current_user.username, 
@@ -166,7 +170,6 @@ def logout():
     flash("Logged out successfully.", "info")
     return redirect(url_for('index'))
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
