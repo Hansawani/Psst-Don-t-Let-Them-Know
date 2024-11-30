@@ -93,7 +93,8 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Use an environment variable for production
 
 # MongoDB Config
-app.config["MONGO_URI"] = "mongodb://localhost:27017/password_manager"
+
+app.config["MONGO_URI"] = "mongodb+srv://sushwetabm:3rBSUozWnq6nvNEl@cluster0.2ncb4.mongodb.net/test?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 # Flask-Login Setup
